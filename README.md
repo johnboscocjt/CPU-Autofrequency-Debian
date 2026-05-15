@@ -18,7 +18,7 @@
 - Prevents CPU from staying at maximum frequency unnecessarily
 - Works great with Intel CPUs (like your i5-6300U)
 
-In your case, it successfully set the governor to **powersave** and turned **turbo boost OFF** when not needed, bringing down total CPU usage to ~18.6% even though individual cores were active.
+In your case, it successfully reduced total CPU usage to ~18.6% and turned turbo boost off when not needed.
 
 ---
 
@@ -40,10 +40,7 @@ sudo auto-cpufreq --install
 
 ## Important Post-Installation Step (GNOME)
 
-If you see this message:
-> **GNOME Power Profiles Daemon should be enabled**
-
-Run this command:
+If you see the message about GNOME Power Profiles:
 
 ```bash
 sudo python3 -m auto_cpufreq.power_helper --gnome_power_enable
@@ -51,19 +48,53 @@ sudo python3 -m auto_cpufreq.power_helper --gnome_power_enable
 
 ---
 
+## How to Check Status (Very Important)
+
+After installation, always check if auto-cpufreq is working:
+
+```bash
+auto-cpufreq --stats
+```
+
+This command shows:
+- Current governor (powersave / performance)
+- CPU frequencies
+- Temperatures
+- Whether turbo boost is on/off
+- Total CPU usage, etc.
+
+Run this command regularly to monitor how well it's working.
+
+---
+
+## Auto Start on Boot (Already Enabled)
+
+When you run `sudo auto-cpufreq --install`, it **automatically enables** the service to start every time your computer boots.
+
+To verify it is enabled on startup:
+
+```bash
+systemctl status auto-cpufreq.service
+```
+
+You should see `Loaded: loaded` and `Active: active (running)`.
+
+---
+
 ## Useful Commands
 
 | Command                                      | Purpose                                      |
 |---------------------------------------------|----------------------------------------------|
-| `auto-cpufreq --stats`                      | View live statistics (recommended)           |
+| `auto-cpufreq --stats`                      | View live statistics (most important)        |
 | `sudo auto-cpufreq --force=performance`     | Force maximum performance                    |
 | `sudo auto-cpufreq --force=powersave`       | Force maximum power saving                   |
 | `sudo auto-cpufreq --remove`                | Completely uninstall                         |
+| `systemctl status auto-cpufreq.service`     | Check if service is running on boot          |
 | `auto-cpufreq --help`                       | Show all options                             |
 
 ---
 
-## Complete Uninstall Guide (Very Important)
+## Complete Uninstall Guide
 
 Run these commands in order if you ever want to remove it:
 
@@ -89,10 +120,9 @@ Then press **Alt + F2**, type `r` and press Enter to refresh desktop.
 ---
 
 ## Quick Tips
-
-- Use `--force=performance` when doing heavy tasks (video editing, compiling, gaming).
+- Use `--force=performance` when doing heavy tasks.
 - Let it run in **auto** mode for daily use (best balance).
-- Always check `auto-cpufreq --stats` to see what it's doing.
+- Check status regularly with `auto-cpufreq --stats`.
 
 ---
 
