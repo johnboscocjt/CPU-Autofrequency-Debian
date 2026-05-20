@@ -26,7 +26,7 @@ In your case, it successfully reduced total CPU usage to ~18.6% and turned turbo
 
 ```bash
 cd ~/installationfolder
-git clone https://github.com/AdnanHodzic/auto-cpufreq.git
+git clone https://github.com
 cd auto-cpufreq
 sudo ./auto-cpufreq-installer
 ```
@@ -34,6 +34,46 @@ sudo ./auto-cpufreq-installer
 After installer finishes:
 ```bash
 sudo auto-cpufreq --install
+```
+
+### Expected Output During Installation:
+```text
+--------------------- Deploying auto-cpufreq as a daemon ----------------------
+
+* Turn off Bluetooth on boot (only)!
+  If you want bluetooth enabled on boot run: auto-cpufreq --bluetooth_boot_on
+
+* Deploy auto-cpufreq install script
+
+* Deploy auto-cpufreq remove script
+auto-cpufreq snap package not installed
+GNOME Power Profiles Daemon should be enabled. run:
+
+sudo python3 -m auto_cpufreq.power_helper --gnome_power_enable
+
+─────────────────── Running auto-cpufreq daemon install script ───────────────────
+
+Deploying auto-cpufreq systemd unit file
+
+* Reloading systemd manager configuration
+
+* Starting auto-cpufreq daemon (systemd) service
+
+* Enabling auto-cpufreq daemon (systemd) at boot
+
+----------------- auto-cpufreq daemon installed and running -----------------
+
+To view live stats, run:
+auto-cpufreq --stats
+
+auto-cpufreq makes all decisions automatically, if you would like to
+configure certain setting to your own liking, please refer to:
+https://github.com
+
+To disable and remove auto-cpufreq daemon, run:
+sudo auto-cpufreq --remove
+
+-------------------------------------------------------------------------------
 ```
 
 ---
@@ -83,12 +123,14 @@ You should see `Loaded: loaded` and `Active: active (running)`.
 
 ## Useful Commands
 
+
 | Command                                      | Purpose                                      |
 |---------------------------------------------|----------------------------------------------|
 | `auto-cpufreq --stats`                      | View live statistics (most important)        |
-| `sudo auto-cpufreq --force=performance`     | Force maximum performance                    |
-| `sudo auto-cpufreq --force=powersave`       | Force maximum power saving                   |
-| `sudo auto-cpufreq --remove`                | Completely uninstall                         |
+| `sudo auto-cpufreq --force=performance`     | Force maximum performance override           |
+| `sudo auto-cpufreq --force=powersave`       | Force maximum power saving override          |
+| `sudo auto-cpufreq --force=reset`           | Reset and return to automatic mode           |
+| `sudo auto-cpufreq --remove`                | Completely uninstall daemon                  |
 | `systemctl status auto-cpufreq.service`     | Check if service is running on boot          |
 | `auto-cpufreq --help`                       | Show all options                             |
 
@@ -120,9 +162,6 @@ Then press **Alt + F2**, type `r` and press Enter to refresh desktop.
 ---
 
 ## Quick Tips
-- Use `--force=performance` when doing heavy tasks.
+- Use `--force=performance` when doing heavy tasks like compiling or gaming.
 - Let it run in **auto** mode for daily use (best balance).
 - Check status regularly with `auto-cpufreq --stats`.
-
----
-
